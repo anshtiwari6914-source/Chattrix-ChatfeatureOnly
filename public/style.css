@@ -1,0 +1,359 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+.title{
+  color: #ffaa33;
+  margin-top: 20px;
+}
+
+
+
+
+#onlineCount{
+  height: 100;
+  width: 100;
+  color: #ffaa33;
+  margin-left: 150px;
+  display: inline;
+}
+
+
+body {
+    
+    background: #0f0f0f;
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ---------------- NAVBAR ---------------- */
+
+.navbar {
+    height: 70px;
+    padding: 0 40px;
+    background: rgba(15, 8, 2, 0.6);
+    border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    background: orange;
+    height: 35px;
+    width: 35px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: #f4f4f4;
+}
+
+.nav-right a {
+    margin-left: 30px;
+    color: #e0d0a0;
+    text-decoration: none;
+    font-size: 15px;
+}
+.nav-right a.active {
+    color: #ffaa33;
+}
+
+/* -------- MAIN WRAPPER (50/50 LAYOUT) -------- */
+
+.main-wrapper {
+  height: calc(100vh - 70px);
+  display: flex;
+  overflow: hidden;
+}
+
+
+/* ---------- LEFT: VIDEO SECTION ---------- */
+
+.video-box {
+  
+  width: 365px;
+  height: 320px;       /* ← SAME HEIGHT FOR BOTH */
+  background: #000;
+  border-radius: 8px;
+  object-fit: cover;    /* Crop nicely */
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-label{
+  display: flex;
+  height: 100;
+  width: 100;
+  margin-left: 130px;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+.video-section {
+  flex: 1 0 520px;   /* grow | don't shrink | minimum width */
+  background: #1a1a1a;
+  padding: 30px;
+  overflow: hidden;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.videos {
+    display: flex;
+    
+    gap: 20px;
+    height: 60%;
+}
+
+
+
+.label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: #00000088;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+/* -------- CONTROLS -------- */
+
+.controls {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: white;
+    cursor: pointer;
+}
+
+
+.skip {
+    background: #ffbb33;
+    color: black;
+    font-weight: bold;
+}
+
+#leaveBtn{
+  display: none;
+}
+#toggleMicBtn{
+  display: none;
+}
+
+#toggleCamBtn{
+  display: none;
+  height: 50px;
+    width: 150px;
+}
+
+#skipBtn{
+  display: none;
+}
+
+#startBtn{
+    margin-top: 30px;
+    height: 50px;
+    width: 190px;
+    padding: 12px 20px;
+    background: #ffaa33;
+    border: none;
+    border-radius: 8px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.Cbtn{
+    margin-top: 30px;
+    height: 50px;
+    width: 80px;
+    padding: 12px 20px;
+    background: #ffaa33;
+    border: none;
+    border-radius: 8px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mic{
+    background: #ffbb33;
+    color: black;
+    font-weight: bold;
+}
+
+
+
+/* ---------- RIGHT: CHAT SECTION ---------- */
+
+@media (max-width: 950px) {
+  .chat-section {
+    display: none;
+  }
+
+  .video-section {
+    flex: 1 0 100%;
+  }
+}
+
+
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #121212;
+  border-radius: 10px;
+}
+
+
+.chat-section {
+  flex: 1 1 320px;   /* grow | CAN shrink | smaller min */
+  background: #121212;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-info {
+    text-align: center;
+    margin-top: 80px;
+}
+
+.wave {
+    font-size: 35px;
+}
+
+.chat-info h3 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #e8e8e8;
+    line-height: 1.3;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #1f1f1f;
+    color: white;
+}
+
+.chat-input button {
+    padding: 12px 20px;
+    background: #ffaa33;
+    border: none;
+    border-radius: 8px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+#Disclaimer{
+    font-size: 18px;
+    font-weight: bold;
+    color: #f4f4f4;
+    margin-top: 62px;
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+.system-message {
+  text-align: center;
+  font-weight: 600;
+  padding: 8px;
+  margin: 10px 0;
+  color: #0f172a;
+  background: #e0f2fe;
+  border-radius: 8px;
+}
+
+
+/* Blur state */
+.app-blur {
+  filter: blur(6px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Overlay message */
+#screenWarning {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#screenWarning.active {
+  display: flex;
+}
+
+#screenWarning .box {
+  background: #111;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  max-width: 420px;
+}
+
+#screenWarning h2 {
+  color: #ffaa33;
+  margin-bottom: 10px;
+}
+
+

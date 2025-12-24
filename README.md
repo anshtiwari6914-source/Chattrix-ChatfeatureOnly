@@ -1,0 +1,1 @@
+# Chattrix — AC.IN login + video chat\n\nPlace your Firebase service account JSON in serviceAccountKey.json and fill firebaseConfig in auth/login.html.

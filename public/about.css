@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+body {
+    background: #0f0f0f;
+    color: white;
+}
+
+/* ---------------- NAVBAR ---------------- */
+.navbar {
+    height: 70px;
+    padding: 0 40px;
+    background: rgba(15, 8, 2, 0.6);
+    border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    background: orange;
+    height: 35px;
+    width: 35px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: #f4f4f4;
+}
+
+.nav-right a {
+    margin-left: 30px;
+    color: #e0d0a0;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.nav-right a.active {
+    color: #ffaa33;
+}
+
+/* ---------------- ABOUT SECTION ---------------- */
+
+.about {
+    padding: 60px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 70%;
+    max-width: 900px;
+}
+
+h1 {
+    font-size: 38px;
+    font-weight: bold;
+    color: #ffaa33;
+    margin-bottom: 10px;
+}
+
+.tagline {
+    font-size: 18px;
+    color: #d0d0d0;
+    margin-bottom: 40px;
+}
+
+.content p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 12px;
+    font-size: 22px;
+    color: #ffaa33;
+}
+
+.values {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.values li {
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #e0e0e0;
+}
+
+.values span {
+    color: #ffaa33;
+    font-weight: bold;
+}
+
+/* ---------------- FOOTER ---------------- */
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    color: #b0b0b0;
+    border-top: 1px solid #222;
+    font-size: 14px;
+}

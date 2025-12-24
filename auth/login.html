@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<div id="lockScreen">
+<head>
+<meta charset="UTF-8">
+<title>Chattrix/login-page</title>
+<link rel="stylesheet" href="/auth/auth.css">
+
+</head>
+<body>
+
+    <!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="logo">C</div>
+        <span class="brand">Chattrix</span>
+    </div>
+
+    <div class="nav-right">
+        <a >Home</a>
+        <a >About</a>
+        <a >Safety</a>
+        <a >Help</a>
+    </div>
+    
+</nav>
+
+    <!-- LOGIN SECTION -->
+    <section class="login-container">
+        
+        <div class="login-header">
+            <div class="login-logo">C</div>
+            <h1>Chattrix</h1>
+            <p>Secure Access Portal</p>
+        </div>
+
+        <div class="login-box">
+            <h2 id="title">Login</h2>
+            <input id="Email" type="email" placeholder="Enter Student Email" class="login-input">
+            <input id="password" type="password" placeholder="Password" class="login-input">
+            <button id="login-btn" class="login-btn">LOG IN</button>
+            <p class ="switch" onclick="toggleMode()">Don't have an account? Create One</p>
+            <p id="msg" style="color: red; text-align: center;"></p>
+        </div>
+
+        <footer class="login-footer">
+            © 2023 Chattrix Inc. All rights reserved.  
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a>
+        </footer>
+
+    </section>
+
+    <!-- Firebase SDK -->
+
+<script>
+(function () {
+  const isTouch = navigator.maxTouchPoints > 0;
+  const smallScreen = Math.min(screen.width, screen.height) < 900;
+  const portrait = screen.height > screen.width;
+  const noWebRTC = !navigator.mediaDevices;
+
+  if ((isTouch && smallScreen) || portrait || noWebRTC) {
+    document.documentElement.style.background = "#000";
+
+  document.head.innerHTML += `
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop Only</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", system-ui, sans-serif;
+      }
+      body {
+        background: #000;
+        color: #fff;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .card {
+        width: 100%;
+        max-width: 360px;
+        background: rgba(255,255,255,0.04);
+        border-radius: 20px;
+        padding: 30px 25px;
+        text-align: center;
+        backdrop-filter: blur(14px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      }
+      .icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+      h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        font-size: 1rem;
+        opacity: 0.75;
+        margin-bottom: 12px;
+      }
+      .genz {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+      .divider {
+        height: 1px;
+        background: rgba(255,255,255,0.12);
+        margin: 20px 0;
+      }
+      .soon {
+        font-size: 0.9rem;
+        opacity: 0.6;
+      }
+    </style>
+  `;
+
+  document.body.innerHTML = `
+    <div class="container">
+      <div class="card">
+        <div class="icon">💻</div>
+        <h1>Desktop only.</h1>
+        <p class="subtitle">
+          This app works best on desktop right now.
+        </p>
+        <p class="genz">
+          This hits different on desktop 👀
+        </p>
+        <div class="divider"></div>
+        <p class="soon">
+          Mobile app coming soon 🚀
+        </p>
+      </div>
+    </div>
+  `;
+    return; // ✅ stop script safely
+  }
+})();
+</script>
+
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+
+<script src="/auth/auth.js"></script>
+
+
+
+</body>
+
+</div>
+</html>
