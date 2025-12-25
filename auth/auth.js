@@ -55,23 +55,28 @@ document.getElementById("login-btn").addEventListener("click", () => {
 });
 
 function signup(email, password) {
+  const msg = document.getElementById("msg");
+  msg.style.color = "red";
+
   auth.createUserWithEmailAndPassword(email, password)
-    .then(async (cred) => {
-      // ✅ SEND VERIFICATION EMAIL
-      await cred.user.sendEmailVerification();
-
-      document.getElementById("msg").style.color = "green";
-      document.getElementById("msg").innerText =
-        "Verification email sent. Please verify before login.";
-
-      // 🔒 Force logout until verified
-      await auth.signOut();
+    .then(() => {
+      msg.style.color = "green";
+      msg.innerText = "Account created successfully. You can login now.";
     })
     .catch(err => {
-        if(err.message == "Firebase: Password should be at least 6 characters (auth/weak-password)."){
-      document.getElementById("msg").innerText = "Password should be at least 6 characters ";}
-    }); 
+      if (err.code === "auth/email-already-in-use") {
+        msg.innerText = "User already exists with this email.";
+      } else if (err.code === "auth/weak-password") {
+        msg.innerText = "Password should be at least 6 characters.";
+      } else if (err.code === "auth/invalid-email") {
+        msg.innerText = "Invalid email address.";
+      } else {
+        msg.innerText = err.message;
+      }
+    });
 }
+
+
 
 function login(email, password) {
     auth.signInWithEmailAndPassword(email, password)

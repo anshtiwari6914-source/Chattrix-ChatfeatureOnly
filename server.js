@@ -1,5 +1,7 @@
 // server.js
 let adminSockets = new Set();
+let userSockets = new Set(); // 👈 REAL users only
+
 let reportsCount = 0;
 let progressCount = 0;
 const PROGRESS_TARGET = 10000;
@@ -124,6 +126,9 @@ function unpairSocket(socketId) {
 
 io.on("connection", (socket) => {
 
+  const isAdmin = socket.handshake.query.admin === "true";
+  socket.isAdmin = isAdmin;
+
 
   // ---------------------------
   // SEND CURRENT COUNT TO CLIENT
@@ -150,25 +155,27 @@ io.on("connection", (socket) => {
 
   
 // Admin detected
-if (socket.handshake.query.admin === "true") {
+if (socket.isAdmin) {
   adminSockets.add(socket.id);
-  emitAdminStats(); // 👈 user connected
-  console.log("🛡️ Admin connected");
+  emitAdminStats();
+  console.log("🛡️ Admin connected:", socket.id);
+
   socket.on("disconnect", () => {
     adminSockets.delete(socket.id);
-    emitAdminStats(); // 👈 user connected
-
+    emitAdminStats();
   });
 
-  // Send stats immediately
+  // send stats immediately
   socket.emit("admin-stats", {
-    online: io.engine.clientsCount,
+    online: userSockets.size,
     chats: pairs.size / 2,
     reports: reportsCount
   });
 
-  return; // ⛔ admin does NOT join chat logic
+  return; // ⛔ admin never joins user logic
 }
+// REAL USER CONNECTED
+userSockets.add(socket.id);
 emitAdminStats(); // 👈 user connected
 
 
@@ -205,7 +212,7 @@ socket.on("send-crush", () => {
 });
 
 
-  io.emit("online-count", io.engine.clientsCount);
+  io.emit("online-count", userSockets.size );
 
   //   socket.on("pairing-started", () => {
   //   showMessage("🔄 Connecting to stranger...");
@@ -301,6 +308,8 @@ socket.on("send-crush", () => {
 
 
  socket.on("disconnect", () => {
+  userSockets.delete(socket.id);
+
   const partner = unpairSocket(socket.id);
 
   const index = waitingQueue.indexOf(socket.id);
@@ -311,8 +320,9 @@ socket.on("send-crush", () => {
     io.to(partner).emit("waiting");
   }
 
-  io.emit("online-count", io.engine.clientsCount);
+  emitAdminStats();
 });
+
 
 
 });
@@ -325,16 +335,16 @@ function clearCrush(a, b) {
 
 function emitAdminStats() {
   const data = {
-    online: io.engine.clientsCount,
+    online: userSockets.size,   // ✅ REAL USERS ONLY
     chats: pairs.size / 2,
     reports: reportsCount
   };
-  console.log("📊 ADMIN STATS EMITTED:", data); // 👈 ADD THIS
 
   adminSockets.forEach(id => {
     io.to(id).emit("admin-stats", data);
   });
 }
+
 
 
 // ---------------- START SERVER ----------------
