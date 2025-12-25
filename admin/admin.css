@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: #e5e7eb;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 30px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+}
+
+.logout {
+  background: #ef4444;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 70px);
+}
+
+.sidebar {
+  width: 220px;
+  padding: 20px;
+  background: rgba(255,255,255,0.04);
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #cbd5f5;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background: rgba(59,130,246,0.25);
+}
+
+.main {
+  flex: 1;
+  padding: 25px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  padding: 20px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 18px;
+}
+
+.card.active {
+  border-top: 4px solid #3b82f6;
+}
+
+.card h2 {
+  font-size: 32px;
+  margin-top: 8px;
+}
+
+.panel {
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 18px;
+}
+
+.stream {
+  margin-top: 10px;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+td, th {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}

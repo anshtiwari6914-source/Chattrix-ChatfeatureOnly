@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chattrix Admin Panel</title>
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <h1>CHATTRIX ADMIN</h1>
+  <button class="logout">Logout</button>
+</header>
+
+<div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a class="active">Dashboard</a>
+    <a>Users</a>
+    <a>Reports</a>
+    <a>Rooms</a>
+    <a>Analytics</a>
+    <a>Settings</a>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <!-- Stats -->
+    <section class="stats">
+      <div class="card">
+        <p>Online Users</p>
+        <h2 id="onlineUsers">0</h2>
+      </div>
+      <div class="card active">
+        <p>Active Chats</p>
+        <h2 id="activeChats">0</h2>
+      </div>
+      <div class="card">
+        <p>Reports</p>
+        <h2 id="reports">0</h2>
+      </div>
+    </section>
+
+    <!-- Live -->
+    <section class="panel">
+      <h3>Live Chat Stream</h3>
+      <div class="stream">
+        <p>🟢 User A → Hello</p>
+        <p>🔴 User B → Spam detected</p>
+      </div>
+    </section>
+
+    <!-- Bottom -->
+    <section class="bottom">
+      <div class="panel">
+        <h3>Recent Reports</h3>
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Chat</th>
+            <th>Reason</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <td>R-001</td>
+            <td>C-123</td>
+            <td>Misconduct</td>
+            <td>Review</td>
+          </tr>
+          <tr>
+            <td>R-002</td>
+            <td>C-542</td>
+            <td>Spam</td>
+            <td>New</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h3>User Stats</h3>
+        <p>Male: 80%</p>
+        <p>Female: 20%</p>
+      </div>
+    </section>
+    <section class="panel">
+  <h3>Instagram Progress Control</h3>
+
+  <input
+    type="range"
+    id="progressSlider"
+    min="0"
+    max="10000"
+    step="1"
+  />
+
+  <p>
+    Followers Count:
+    <strong id="progressValue">0</strong> / 10000
+  </p>
+</section>
+
+  </main>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

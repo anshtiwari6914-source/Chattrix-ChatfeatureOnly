@@ -42,40 +42,44 @@
 
     <!-- LEFT : VIDEO SECTION -->
     <div class="video-section">
-
-      <h2 class="title">Vibe Check: Connected 💫</h2>
-
-      <div class="videos">
-        <!-- your (local) video -->
-        <div class="video-wrapper">
-          <div class="video-label">You</div>
-          <video id="myVideo" class="video-box" autoplay playsinline width="300" muted></video>
-        </div>
-
-        <!-- remote peer video (must be a <video> element) -->
-        <div class="video-wrapper">
-          <div class="video-label">Stranger</div>
-          <video id="peerVideo" class="video-box" autoplay playsinline width="300"></video>
-        </div>
-      </div>
-
-      <div class="controls">
-        <button id="startBtn">Let’s Vibe</button>
-        <button class="Cbtn"id="skipBtn" disabled>Skip</button>
-        <button class="Cbtn"id="leaveBtn" disabled>Leave</button>
-        <button class="Cbtn"id="toggleCamBtn">Hide Camera</button>
-        <button class="Cbtn"id="toggleMicBtn">Mute</button>
-      </div>
-      
-      <p id="Disclaimer">Disclaimer : Chat responsibly—strangers can be fun… or weird, mostly weird.</p>
-      
+      <div class="popup-card">
+    
+    <div class="popup-header">
+      🎥 Video Chat Locked
     </div>
+
+    <p class="popup-text">
+      Video chat unlocks when <b>10,000 students</b> join the Chattrix community.
+    </p>
+
+    <div class="progress-wrapper">
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:64%;"></div>
+      </div>
+      <span class="progress-text">6,420 / 10,000</span>
+    </div>
+
+    <p class="popup-subtext">
+      Follow us on Instagram to unlock it faster 👇
+    </p>
+
+    <a href="https://instagram.com/chattrix.in" target="_blank" class="insta-btn">
+      📸 Follow @chattrix.in
+    </a>
+
+    <p class="reward-text">
+      Early users get free unlimited video access 🎁
+    </p>
+
+    <button class="close-btn" onclick="closePopup()">Maybe later</button>
+  </div>
+  <p id="Disclaimer">Disclaimer : Chat responsibly—strangers can be fun… or weird, mostly weird.</p>
+</div>
 
     <!-- RIGHT : CHAT SECTION -->
     <div class="chat-section">
       <div id="pretext" class="chat-info">
-        <span class="wave">👋</span>
-        <h3>Say hello to<br>your new match!</h3>
+        <h3>👋 Say hello to<br>your new match!</h3>
       </div>
 
       <div id="chatWindow" class="chat-window"></div>
@@ -84,6 +88,14 @@
         <input id="chatMsg" type="text" placeholder="Type message here...">
         <button  id="sendBtn" disabled>Send</button>
       </div>
+      <div class="controls">
+        <button id="startBtn">Let’s Vibe</button>
+        <button class="Cbtn"id="skipBtn">Skip</button>
+        <button class="Cbtn"id="report">Report</button>
+        <button class="Cbtn"id="crush">Crush?</button>
+      </div>
+      
+      
     </div>
   </div>
 
@@ -94,7 +106,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
 
-<script>
+<!-- <script>
   const firebaseConfig = {
     apiKey: "AIzaSyDzs75cgOPRzG2q_6_ofCIJ-lTKcSB3YK4",
   authDomain: "chattrix-e70e2.firebaseapp.com",
@@ -115,7 +127,7 @@ document.addEventListener("visibilitychange", () => {
     });
   }
 });
-</script>
+</script> -->
 
 
 </body>

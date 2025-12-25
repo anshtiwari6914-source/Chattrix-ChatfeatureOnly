@@ -88,48 +88,12 @@ body {
 
 
 /* ---------- LEFT: VIDEO SECTION ---------- */
-
-.video-box {
-  
-  width: 365px;
-  height: 320px;       /* ← SAME HEIGHT FOR BOTH */
-  background: #000;
-  border-radius: 8px;
-  object-fit: cover;    /* Crop nicely */
-  margin-left: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.video-label{
-  display: flex;
-  height: 100;
-  width: 100;
-  margin-left: 130px;
-  margin-top: 50px;
-  margin-bottom: 10px;
-}
-
-.video-section {
-  flex: 1 0 520px;   /* grow | don't shrink | minimum width */
-  background: #1a1a1a;
-  padding: 30px;
-  overflow: hidden;
-}
-
 .title {
     text-align: center;
     margin-bottom: 20px;
     font-size: 22px;
 }
 
-.videos {
-    display: flex;
-    
-    gap: 20px;
-    height: 60%;
-}
 
 
 
@@ -185,6 +149,16 @@ body {
   display: none;
 }
 
+#report{
+  background-color: #FF0000;
+  display: none;
+}
+
+#crush{
+  background-color:#F9629F ;
+  display: none;
+}
+
 #startBtn{
     margin-top: 30px;
     height: 50px;
@@ -215,11 +189,6 @@ body {
     cursor: pointer;
 }
 
-.mic{
-    background: #ffbb33;
-    color: black;
-    font-weight: bold;
-}
 
 
 
@@ -248,13 +217,14 @@ body {
 }
 
 
-.chat-section {
-  flex: 1 1 320px;   /* grow | CAN shrink | smaller min */
+.chat-section {  /* grow | CAN shrink | smaller min */
   background: #121212;
   padding: 30px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  width: 50%;
+  
 }
 
 .chat-info {
@@ -320,40 +290,94 @@ body {
 }
 
 
-/* Blur state */
-.app-blur {
-  filter: blur(6px);
-  pointer-events: none;
-  user-select: none;
-}
 
-/* Overlay message */
-#screenWarning {
+
+
+.overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-#screenWarning.active {
+  background: rgba(0,0,0,0.6);
   display: flex;
+  z-index: 999;
 }
 
-#screenWarning .box {
+.popup-card {
   background: #111;
-  padding: 30px 40px;
-  border-radius: 12px;
+  color: #fff;
+  width: 90%;
+  max-width: 360px;
+  border-radius: 16px;
+  padding: 22px;
   text-align: center;
-  color: white;
-  max-width: 420px;
+  font-family: system-ui, sans-serif;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  margin: 200px auto;
 }
 
-#screenWarning h2 {
-  color: #ffaa33;
+.popup-header {
+  font-size: 20px;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 
+.popup-text {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 16px;
+}
 
+.progress-wrapper {
+  margin-bottom: 14px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff7a18, #ffb347);
+}
+
+.progress-text {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.popup-subtext {
+  font-size: 13px;
+  margin: 14px 0;
+}
+
+.insta-btn {
+  display: block;
+  background: #ff7a18;
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.reward-text {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  margin-top: 10px;
+  font-size: 13px;
+}
+.video-section{
+  width: 50%;
+}

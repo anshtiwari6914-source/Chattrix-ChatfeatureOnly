@@ -1,7 +1,10 @@
 // public/client.js (fixed)
+
 const socket = io();
 const startBtn = document.getElementById("startBtn");
 const skipBtn = document.getElementById("skipBtn");
+const reportBtn = document.getElementById("report");
+const crushBtn = document.getElementById("crush");
 const leaveBtn = document.getElementById("leaveBtn");
 const statusEl = document.getElementById("status");
 const localVideo = document.getElementById("myVideo");
@@ -14,29 +17,17 @@ const toggleMicBtn = document.getElementById("toggleMicBtn");
 const onlineCount = document.getElementById("onlineCount");
 const pretext = document.getElementById("pretext");
 
+crushBtn.disabled = true;
 
-setInterval(() => {
-  console.log("Viewport Height:", window.innerHeight);
-}, 500);
 
 
 
 let pendingCandidates = [];
 
-let localStream;
 let pc; // RTCPeerConnection
 let currentPartner = null;
 let roomId = null;
 
-
-document.addEventListener("visibilitychange", () => {
-  if (!localStream) return;
-
-  const videoTrack = localStream.getVideoTracks()[0];
-  if (!videoTrack) return;
-
-  videoTrack.enabled = !document.hidden;
-});
 
 
 const systemMessage = document.getElementById("systemMessage");
@@ -89,31 +80,10 @@ function setStatus(s) {
 }
 
 async function startLocal() {
-  if (!localStream) {
-    try {
-      localStream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          width: { ideal: 640 },
-          height: { ideal: 360 },
-          frameRate: { max: 20 }
-        },
-        audio: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true
-        }
-      });
-
-      if (localVideo) localVideo.srcObject = localStream;
-      startBtn.style.display = "none";
-      skipBtn.style.display = "inline";
-      toggleCamBtn.style.display = "inline";
-      toggleMicBtn.style.display = "inline";
-    } catch (e) {
-      alert("Could not access camera/mic: " + e.message);
-      throw e;
-    }
-  }
+  startBtn.style.display = "none";
+  skipBtn.style.display = "inline";
+  reportBtn.style.display = "inline";
+  crushBtn.style.display = "inline";
 }
 
 function createPeerConnection() {
@@ -130,44 +100,6 @@ pc.addTransceiver("video", {
 
   console.log("🧠 PeerConnection created");
 
-  if (localStream) {
-    localStream.getTracks().forEach((t) => {
-      pc.addTrack(t, localStream);
-      console.log("➕ Track added:", t.kind);
-    });
-  }
-
-  // 🔥 ADD THIS BLOCK RIGHT HERE
-  const sender = pc.getSenders().find(s => s.track?.kind === "video");
-  if (sender) {
-    const params = sender.getParameters();
-    if (!params.encodings) params.encodings = [{}];
-
-    params.encodings[0].maxBitrate = 400_000; // 400 kbps
-    params.encodings[0].maxFramerate = 20;
-
-    sender.setParameters(params);
-  }
-
-  pc.ontrack = (ev) => {
-    console.log("🎥 Remote track received");
-    remoteVideo.srcObject = ev.streams[0];
-  };
-
-  pc.onicecandidate = (ev) => {
-    if (ev.candidate) {
-      console.log("🧊 ICE candidate generated");
-      socket.emit("signal", { type: "ice", candidate: ev.candidate });
-    }
-  };
-
-  pc.oniceconnectionstatechange = () => {
-    console.log("🧊 ICE state:", pc.iceConnectionState);
-  };
-
-  pc.onconnectionstatechange = () => {
-    console.log("🔗 PC state:", pc.connectionState);
-  };
 }
 
 
@@ -179,13 +111,6 @@ function cleanupPeer() {
   if (remoteVideo) remoteVideo.srcObject = null;
 }
 
-function stopLocalStream() {
-  if (localStream) {
-    localStream.getTracks().forEach((t) => t.stop());
-    localStream = null;
-    if (localVideo) localVideo.srcObject = null;
-  }
-}
 
 // Chat UI helper
 function appendChat(msg, self = false) {
@@ -223,8 +148,19 @@ function appendChat(msg, self = false) {
 }
 
 // ---------- Socket handlers ----------
+
+
+
+
 socket.on("connect", () => {
+  socket.emit("ping-test");
+// testing
+  console.log("✅ Socket connected:", socket.id);
   setStatus("Connected to server. Click Start to join queue.");
+});
+
+socket.on("disconnect", () => {
+  console.log("❌ Socket disconnected");
 });
 
 socket.on("online-count", (count) => {
@@ -239,6 +175,11 @@ socket.on("waiting", () => {
 });
 
 socket.on("paired", async ({ room, partner }) => {
+  currentPartner = partner;
+
+  crushBtn.disabled = false;
+  crushBtn.textContent = "💖 Crush";
+
   if (chatWindow) chatWindow.innerHTML = "";
   roomId = room;
   currentPartner = partner;
@@ -267,11 +208,14 @@ socket.on("paired", async ({ room, partner }) => {
 });
 
 socket.on("partner-left", () => {
+  crushBtn.disabled = false;
+  crushBtn.textContent = "💖 Crush";
   pretext.style.display="inline";
   showMessage("⚠️ Stranger skipped. Waiting for a new user...");
   setStatus("Partner disconnected. Waiting for a new partner...");
   currentPartner = null;
   roomId = null;
+  if (chatWindow) chatWindow.innerHTML = "";
   cleanupPeer();
 
   sendBtn.disabled = true;
@@ -326,6 +270,12 @@ socket.on("chat-message", ({ msg }) => {
   pretext.style.display="none";
 });
 
+socket.on("crush-match", () => {
+  alert("💘 It's a MATCH!");
+  showMessage("💘 You both crushed each other!");
+});
+
+
 socket.on("pairing-started", () => {
   let count = 3;
   showMessage(`🔄 Connecting... ${count}`);
@@ -340,6 +290,17 @@ socket.on("pairing-started", () => {
   }, 1000);
 });
 
+socket.on("progress-update", ({ count, target }) => {
+  const percent = Math.min((count / target) * 100, 100);
+
+  document.querySelector(".progress-fill").style.width = percent + "%";
+  document.querySelector(".progress-text").textContent =
+    `${count} / ${target}`;
+});
+
+socket.on("system-alert", (msg) => {
+  alert(msg);
+});
 
 
 // ---------- Buttons ----------
@@ -367,6 +328,9 @@ chatMsg.addEventListener("keypress", (e) => {
 });
 
 skipBtn.addEventListener("click", () => {
+  crushBtn.disabled = false;
+  crushBtn.textContent = "💖 Crush";
+
   pretext.style.display="inline";
   if (chatWindow) chatWindow.innerHTML = "";
   showMessage("⏭️ You skipped the user. Finding new one...");
@@ -377,43 +341,22 @@ skipBtn.addEventListener("click", () => {
   socket.emit("join-queue");
 });
 
-
-leaveBtn.addEventListener("click", () => {
-  // disconnect socket to leave
-  socket.disconnect();
-  setStatus("Left. Refresh to reconnect.");
-  startBtn.disabled = false;
-  if (skipBtn) skipBtn.disabled = true;
-  if (leaveBtn) leaveBtn.disabled = true;
-  cleanupPeer();
-  stopLocalStream();
-});
-
-// camera toggle
-let camHidden = false;
-toggleCamBtn.addEventListener("click", () => {
-  if (!localStream) return;
-
-  const videoTrack = localStream.getVideoTracks()[0];
-  if (!videoTrack) return;
-
-  camHidden = !camHidden;
-  videoTrack.enabled = !camHidden;
-  toggleCamBtn.textContent = camHidden ? "Show Cam" : "Hide Camera";
-  if (localVideo) localVideo.style.background = camHidden ? "#000" : "#000";
-
+crushBtn.addEventListener("click", () => {
+  console.log("💖 Crush button clicked");
   
+  if (!currentPartner) {
+    console.log("❌ No currentPartner on client");
+    return;
+  }
+
+  socket.emit("send-crush");
+  console.log("📤 send-crush emitted");
+
+  crushBtn.disabled = true;
+  crushBtn.textContent = "💖 Sent";
 });
 
-// mic toggle
-let micMuted = false;
-toggleMicBtn.addEventListener("click", () => {
-  if (!localStream) return;
-
-  const audioTrack = localStream.getAudioTracks()[0];
-  if (!audioTrack) return;
-
-  micMuted = !micMuted;
-  audioTrack.enabled = !micMuted;
-  toggleMicBtn.textContent = micMuted ? "Unmute" : "Mute";
+reportBtn.addEventListener("click", () => {
+  socket.emit("report-user");
+  alert("User reported & skipped");
 });

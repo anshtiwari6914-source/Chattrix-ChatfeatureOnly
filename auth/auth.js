@@ -12,7 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const lockScreen = document.getElementById("lockScreen");
-
+const forgotpass = document.getElementById("fp");
 
 let mode = "login"; // login or signup
 
@@ -24,10 +24,12 @@ function toggleMode() {
     if (mode === "login") {
         mode = "signup";
         title.innerText = "Create Account";
+        forgotpass.style.display = "none";
         btn.innerText = "Sign Up";
         switcher.innerText = "Already have an account? Login";
     } else {
         mode = "login";
+        forgotpass.style.display = "block";
         title.innerText = "Login";
         btn.innerText = "Login";
         switcher.innerText = "Don't have an account? Create One";
@@ -95,4 +97,68 @@ function login(email, password) {
             
 
         });
+}
+
+
+function forgotPassword() {
+  const email = document.getElementById("Email").value;
+  const msg = document.getElementById("msg");
+
+  if (!email) {
+    msg.style.color = "red";
+    msg.textContent = "Enter your email first.";
+    return;
+  }
+
+  firebase.auth().sendPasswordResetEmail(email)
+    .then(() => {
+      msg.style.color = "green";
+      msg.textContent = "Password reset link sent to your email 📧";
+    })
+    .catch((error) => {
+      msg.style.color = "red";
+      msg.textContent = error.message;
+    });
+}
+function forgotPassword() {
+  const email = document.getElementById("Email").value;
+  const msg = document.getElementById("msg");
+
+  if (!email) {
+    msg.style.color = "red";
+    msg.textContent = "Enter your email first.";
+    return;
+  }
+
+  firebase.auth().sendPasswordResetEmail(email)
+    .then(() => {
+      msg.style.color = "green";
+      msg.textContent = "Password reset link sent to your email 📧";
+    })
+    .catch((error) => {
+      msg.style.color = "red";
+      msg.textContent = error.message;
+    });
+}
+
+
+function forgotPassword() {
+  const email = document.getElementById("Email").value;
+  const msg = document.getElementById("msg");
+
+  if (!email) {
+    msg.style.color = "red";
+    msg.textContent = "Enter your email first.";
+    return;
+  }
+
+  firebase.auth().sendPasswordResetEmail(email)
+    .then(() => {
+      msg.style.color = "green";
+      msg.textContent = "Password reset link sent to your email 📧";
+    })
+    .catch((error) => {
+      msg.style.color = "red";
+      msg.textContent = error.message;
+    });
 }
